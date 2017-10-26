@@ -12,7 +12,7 @@
 #'
 #' @export
 #'
-#' @references Yue, S., & Wang, C. Y. (2004). The Mann-Kendall test modified by effective sample size to detect trend in serially correlated hydrological series. Water Resources Management, 18(3), 201–218. http://doi.org/10.1023/B:WARM.0000043140.61082.60
+#' @references Yue, S., & Wang, C. Y. (2004). The Mann-Kendall test modified by effective sample size to detect trend in serially correlated hydrological series. Water Resources Management, 18(3), 201–218.<doi:10.1023/B:WARM.0000043140.61082.60>.
 #'
 #' @examples x<-c(Nile)
 #' spear(x)
@@ -26,7 +26,7 @@ spear<-function(x){
   xi<-1:length(x)
 
 #Calculating ranks of the data
-  yi<-rank(x)
+  yi<-as.integer(rank(x))
 
 
 # calculating Sx,Sy and Sxy
@@ -55,5 +55,5 @@ spear<-function(x){
 # Calculating Rho(s)*sqrt(n-1)
   tsrc<-rhos*sqrt(length(x))
 
-  return(list("Correlation coefficient" = rhos, "Test Statistics" = tsrc))
+  return(c("Correlation coefficient" = rhos, "Test Statistics" = tsrc))
 }
