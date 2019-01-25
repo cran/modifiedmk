@@ -4,7 +4,7 @@
 \alias{bbssr}
 \title{Block bootstrapped Spearman's Rank Correlation Trend Test}
 \usage{
-bbssr(x, ci = 0.95, nsim = 2000, eta = 1, bl.len = NULL)
+bbssr(x, ci=0.95, nsim=2000, eta=1, bl.len=NULL)
 }
 \arguments{
 \item{x}{- Time series data vector}
@@ -33,7 +33,7 @@ Significant serial correlation present in time series data can be accounted for 
 Block lengths are automatically selected using the lag of the least significance serial correlation, to which the 'eta'  term is added. A value of eta = 1 is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
 }
 \examples{
-x<-c(Nile)
+x<-c(Nile[1:10])
 bbssr(x)
 
 }
