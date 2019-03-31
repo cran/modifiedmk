@@ -1,6 +1,6 @@
-#' @title Block bootstrapped Spearman's Rank Correlation Trend Test
+#' @title Nonparametric Block Bootstrapped Spearman's Rank Correlation Trend Test
 #'
-#' @description Significant serial correlation present in time series data can be accounted for using the nonparametric block bootstrap technique, which incorporates the Mann-Kendall trend test (Kundzewicz and Robson, 2000).  Predetermined block lengths are used in resampling the original time series, thus retaining the memory structure of the data.  If the value of the test statistic falls in the tails of the empirical bootstrapped distribution, there is likely a trend in the data.  The block bootstrap technique is powerful in the presence of auto-correlation (Khaliq et al. 2009; Önöz and Bayazit, 2012).
+#' @description Significant serial correlation present in time series data can be accounted for using the nonparametric block bootstrap technique, which incorporates Spearman’s Rank Correlation trend test (Lehmann, 1975; Sneyers, 1990;Kundzewicz and Robson, 2000).  Predetermined block lengths are used in resampling the original time series, thus retaining the memory structure of the data.  If the value of the test statistic falls in the tails of the empirical bootstrapped distribution, there is likely a trend in the data.  The block bootstrap technique is powerful in the presence of autocorrelation (Khaliq et al. 2009; Önöz and Bayazit, 2012).
 #'
 #' @importFrom stats acf qnorm
 #'
@@ -10,21 +10,19 @@
 #'
 #' @param  x  - Time series data vector
 #'
-#' @param  ci - Confidence Interval
+#' @param  ci - Confidence interval
 #'
-#' @param  nsim - Number of simulations
+#' @param  nsim - Number of bootstrapped simulations
 #'
 #' @param  eta - Added to the block length
 #'
 #' @param bl.len - Block length
 #'
-#' @return SR.orig- Spearman's Correlation Coefficient
+#' @return Spearman's Correlation Coefficient - Spearman's correlation coefficient value
 #'
-#' SRtsrc- Test Statistic
+#' Test Statistic - Z-transformed value to test significance \eqn{\rho(\sqrt{n-1})}
 #'
-#' lb- Lower bound of confidence interval value
-#'
-#' ub- Upper bound of confidence interval value
+#' Test Statistic Empirical Bootstrapped CI - Test statistic empirical bootstrapped confidence interval
 #'
 #' @references Box, G. E. P. and Jenkins, G. M. (1970). Time Series Analysis Forecasting and Control. Holden-Day, San Fransisco, California, 712 pp.
 #'
@@ -42,7 +40,7 @@
 #'
 #' @references Svensson, C., Kundzewicz, Z. W., and Maurer, T. (2005). Trend detection in river flow series: 2. Floods and low-flow index series. Hydrological Sciences Journal, 50(5): 811-823.
 #'
-#' @details Block lengths are automatically selected using the lag of the least significance serial correlation, to which the 'eta'  term is added. A value of eta = 1 is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
+#' @details Block lengths are number of contiguous significant serial correlations, to which the (\eqn{\eta}) term is added. A value of \eqn{\eta = 1} is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
 #'
 #' @examples x<-c(Nile[1:10])
 #' bbssr(x)
@@ -50,11 +48,11 @@
 #' @export
 #'
 bbssr <- function(x,ci=0.95,nsim=2000,eta=1, bl.len=NULL) {
-  # Initialize the test Parameters
+  # Initialize the test parameters
 
-  # Time-Series Vector
+  # Time series vector
   x = x
-  # Confidance Interval
+  # Confidance interval
   ci = ci
   #Number of Simulations
   nsim=nsim
@@ -93,11 +91,11 @@ bbssr <- function(x,ci=0.95,nsim=2000,eta=1, bl.len=NULL) {
 
     bd <- qnorm((1 + ci)/2)/sqrt(n)
 
-    # Calculating auto-correlation function of the observations (ro)
+    # Calculating autocorrelation function of the observations (ro)
 
     ro <- acf(x, lag.max=round(n/4), plot=FALSE)$acf[-1]
 
-    #Initialize vector of significant lags of auto-correlation
+    #Initialize vector of significant lags of autocorrelation
 
     sig.v <- rep(0, round(n/4))
 

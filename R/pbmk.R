@@ -1,6 +1,6 @@
-#' @title Decorrelated bootstrapped-based Mann-Kendall Test
+#' @title Bootstrapped Mann-Kendall Trend Test with Optional Bias Corrected Prewhitening
 #'
-#' @description Lancombe et al. (2012) suggest the use of effective prewhitening (Hamed, 2009) to initially decorrelate the data after which the bootstrap based Mann-Kendall test is applied (Yue and Pilon, 2004).
+#' @description The empirical distribution of the Mann-Kendall test statistic is calculated by bootstrapped resampling.  The Hamed (2009) bias correction prewhitening technique can optionally be applied as the default for prewhitening before the bootstrapped Mann-Kendall test is applied (Lacombe et al., 2012).
 #'
 #' @importFrom boot tsboot
 #'
@@ -8,45 +8,38 @@
 #'
 #' @param  x  - Time series data vector
 #'
-#' @param  ci - Confidence Interval
+#' @param  ci - Confidence interval
 #'
-#' @param  nsim - Number of Simulations
+#' @param  nsim - Number of bootstrapped simulations
 #'
-#' @param pw -  Unbiased pre-whitening suggested by Hamed 2009
+#' @param pw -  Optional bias corrected prewhitening suggested by Hamed (2009)
 #'
-#' @return  Z  - Original Mann- Kendall Z-statistic
-#'
-#' Slp  - Original sen's slope
-#'
-#' S.orig  - Original Mann-Kendall 'S'- statistic
-#'
-#' Tau  - Original Mann-Kendall's Tau
-#'
-#' Zpw  - Bias Corrected Prewhitened  Mann- Kendall Z-statistic
-#'
-#' Slppw  - Bias Corrected Prewhitened  sen's slope
-#'
-#' Spw  - Bias Corrected Prewhitened  Mann-Kendall 'S'- statistic
-#'
-#' Taupw  - Bias Corrected Prewhitened  Mann-Kendall's Tau
-#'
-#' pval - Bootstrapped P-Value
+#' @return  Z Value - Mann-Kendall Z statistic from original data
+#' Sen's Slope - Sen's slope from the original data
+#' S - Mann-Kendall S statistic
+#' Kendall's Tau - Mann-Kendall's Tau
+#' BCP Z Value - Bias corrected prewhitened Z value
+#' BCP Sen's Slope - Bias corrected prewhitened Sen's slope
+#' BCP S - Bias corrected prewhitened S
+#' BCP Kendall's Tau - Bias corrected prewhitened Kendall's Tau
+#' Bootstrapped P-Value - Mann-Kendall bootstrapped p-value
 #'
 #' @references Hamed, K. H. (2009). Enhancing the effectiveness of prewhitening in trend analysis of hydrologic data. Journal of Hydrology, 368: 143-155.
 #'
-#' @references Kendall, M. (1975). Multivariate analysis. Charles Griffin. Londres. 0-85264-234-2.
+#' @references Kendall, M. (1975). Rank Correlation Methods. Griffin, London, 202 pp.
 #'
 #' @references Kundzewicz, Z. W. and Robson, A. J. (2004). Change detection in hydrological records - a review of the methodology. Hydrological Sciences Journal, 49(1): 7-19.
 #'
-#' @references Lancombe, G., McCartney, M., and Forkuor, G. (2012). Drying climate in Ghana over the period 1960-2005: evidence from the resampling-based Mann-Kendall test at local and regional levels. Hydrological Sciences Journal, 57(8): 1594-1609. doi:10.1080/02626667.2012.728291
+#' @references Lancombe, G., McCartney, M., and Forkuor, G. (2012). Drying climate in Ghana over the period 1960-2005: evidence from the resampling-based Mann-Kendall test at local and regional levels. Hydrological Sciences Journal, 57(8): 1594-1609.
 #'
-#' @references Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3), 245?259. <doi:10.1017/CBO9781107415324.004>
+#' @references Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3): 245-259.
 #
 #' @references van Giersbergen, N. P. A. (2005). On the effect of deterministic terms on the bias in stable AR models. Economic Letters, 89: 75-82.
 #'
 #' @references Yue, S. and Pilon, P. (2004). A comparison of the power of the t test, Mann-Kendall and bootstrap tests for trend detection, Hydrological Sciences Journal, 49(1): 21-37.
 #'
-#' @details The block bootstrap is used along with the non-parametric Mann-Kendall trend test.  A test statistic falling in the tails of the simulated empirical distribution, the results is likely significant.
+#' @details Bootstrapped samples are calculated by resampling one value at a time from the time series with replacement.  The p-value (\eqn{p_s}) of the resampled data is estimated by (Yue and Pilon, 2004): \deqn{p_s = m_s/M} The Mann-Kendall test statistics (S) is calculated for each resampled dataset.  The resultant vector of resamples S statistics is then sorted in ascending ordering, where \eqn{p_s} is the rank corresponding the largest bootstrapped value of S being less than the test statistic value calculated from the actual data.  M is the total number of bootstrapped resamples.  The default value of M is 1000, however, Yue and Pilon (2004) suggest values between 1000 and 2000.
+#' 
 #'
 #' @examples x<-c(Nile[1:10])
 #' pbmk(x)
@@ -54,23 +47,23 @@
 #' @export
 #'
 pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
-  # Initialize the test Parameters
+  # Initialize the test parameters
 
-  # Time-Series Vector
+  # Time series vector
   x = x
-  # Confidance Interval
+  # Confidance interval
   ci = ci
-  #Number of Simulations
+  #Number of simulations
   nsim=nsim
   # Mann-Kendall Tau
   Tau = NULL
-  # Modified Z-Statistic after Pre-Whitening
+  # Modified Z statistic after prewhitening
   Z = NULL
-  # Modified P-value after Pre-Whitening
+  # Modified p-value after prewhitening
   pval = NULL
-  # Initialize Mann-Kendall 'S'- Statistic - prewhitened
+  # Initialize Mann-Kendall S statistic - prewhitened
   S = NULL
-  # Initialize Mann-Kendall 'S'- Statistic
+  # Initialize Mann-Kendall S statistic
   S.orig = NULL
   # Sen's slope estimate
   slp = NULL
@@ -84,8 +77,8 @@ pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
   nx<-length(x)
 
   #Specify minimum input vector length
-  if (nx < 4) {
-    stop("Input vector must contain at least four values")
+  if (nx < 3) {
+    stop("Input vector must contain at least three values")
   }
 
   # To test whether the data values are finite numbers and attempting to eliminate non-finite numbers
@@ -95,7 +88,7 @@ pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
   }
 
   if (is.null(pw) == FALSE) {
-    #Calculate the lag 1 autocorrelation coefficient and the intercept
+    #Calculate the lag-1 autocorrelation coefficient and the intercept
     zx<-cbind(head(x,n=nx-1),matrix(data=1, nrow=(nx-1),ncol=1),tail(seq(1:nx),n=(nx-1)))
     y<-tail(x,n=nx-1)
     zTrans<-t(zx)
@@ -108,13 +101,13 @@ pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
     #Correct for bias in the lag-1 acf using eq. 24 of Hamed (2009)
     ACFlag1BC<-((nx*ACFlag1)+2)/(nx-4)
 
-    # Calculating pre-whitened Series
+    # Calculating prewhitened series
 
     a=1:(nx-1)
     b=2:nx
     xn<-(x[b]-(x[a]*ACFlag1BC))
 
-    #Bootstrapped using Mann Kendall
+    #Bootstrapped using Mann-Kendall
     MK.orig <- mkttest(x)
     Z <- round(MK.orig["Z-Value"], digits = 7)
     slp <- round(MK.orig["Sen's slope"], digits = 7)
@@ -133,17 +126,17 @@ pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
     }
     pval <- loc/nsim
 
-    cat(paste("Original Z-Value = ", Z,
-              "Original Sen's Slope = ", slp,
-              "Original S = ", S.orig,
-              "Original Kendall's Tau = ", Tau,
-              "Bias Corrected Prewhitened Z-Value = ", Zpw,
-              "Bias Corrected Prewhitened Sen's Slope = ", slpPW,
-              "Bias Corrected Prewhitened S = ", Spw,
-              "Bias Corrected Prewhitened Kendall's Tau = ", TauPW,
+    cat(paste("Z Value = ", Z,
+              "Sen's Slope = ", slp,
+              "S = ", S.orig,
+              "Kendall's Tau = ", Tau,
+              "BCP Z Value = ", Zpw,
+              "BCP Sen's Slope = ", slpPW,
+              "BCP S = ", Spw,
+              "BCP Kendall's Tau = ", TauPW,
               "Bootstrapped P-Value =", pval ,sep="\n"))
   } else {
-    #Bootstrapped using Mann Kendall
+    #Bootstrapped using Mann-Kendall
     MK.orig <- mkttest(x)
     Z <- round(MK.orig["Z-Value"], digits = 7)
     slp <- round(MK.orig["Sen's slope"], digits = 7)
@@ -158,7 +151,7 @@ pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
     }
     pval <- loc/nsim
 
-    cat(paste("Z-Value = ", Z,
+    cat(paste("Z Value = ", Z,
               "Sen's Slope = ", slp,
               "S = ", S.orig,
               "Kendall's Tau = ", Tau,

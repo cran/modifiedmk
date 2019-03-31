@@ -2,43 +2,35 @@
 % Please edit documentation in R/pbmk.R
 \name{pbmk}
 \alias{pbmk}
-\title{Decorrelated bootstrapped-based Mann-Kendall Test}
+\title{Bootstrapped Mann-Kendall Trend Test with Optional Bias Corrected Prewhitening}
 \usage{
 pbmk(x, ci=0.95, nsim=1000, pw="Hamed")
 }
 \arguments{
 \item{x}{- Time series data vector}
 
-\item{ci}{- Confidence Interval}
+\item{ci}{- Confidence interval}
 
-\item{nsim}{- Number of Simulations}
+\item{nsim}{- Number of bootstrapped simulations}
 
-\item{pw}{-  Unbiased pre-whitening suggested by Hamed 2009}
+\item{pw}{-  Optional bias corrected prewhitening suggested by Hamed (2009)}
 }
 \value{
-Z  - Original Mann- Kendall Z-statistic
-
-Slp  - Original sen's slope
-
-S.orig  - Original Mann-Kendall 'S'- statistic
-
-Tau  - Original Mann-Kendall's Tau
-
-Zpw  - Bias Corrected Prewhitened  Mann- Kendall Z-statistic
-
-Slppw  - Bias Corrected Prewhitened  sen's slope
-
-Spw  - Bias Corrected Prewhitened  Mann-Kendall 'S'- statistic
-
-Taupw  - Bias Corrected Prewhitened  Mann-Kendall's Tau
-
-pval - Bootstrapped P-Value
+Z Value - Mann-Kendall Z statistic from original data
+Sen's Slope - Sen's slope from the original data
+S - Mann-Kendall S statistic
+Kendall's Tau - Mann-Kendall's Tau
+BCP Z Value - Bias corrected prewhitened Z value
+BCP Sen's Slope - Bias corrected prewhitened Sen's slope
+BCP S - Bias corrected prewhitened S
+BCP Kendall's Tau - Bias corrected prewhitened Kendall's Tau
+Bootstrapped P-Value - Mann-Kendall bootstrapped p-value
 }
 \description{
-Lancombe et al. (2012) suggest the use of effective prewhitening (Hamed, 2009) to initially decorrelate the data after which the bootstrap based Mann-Kendall test is applied (Yue and Pilon, 2004).
+The empirical distribution of the Mann-Kendall test statistic is calculated by bootstrapped resampling.  The Hamed (2009) bias correction prewhitening technique can optionally be applied as the default for prewhitening before the bootstrapped Mann-Kendall test is applied (Lacombe et al., 2012).
 }
 \details{
-The block bootstrap is used along with the non-parametric Mann-Kendall trend test.  A test statistic falling in the tails of the simulated empirical distribution, the results is likely significant.
+Bootstrapped samples are calculated by resampling one value at a time from the time series with replacement.  The p-value (\eqn{p_s}) of the resampled data is estimated by (Yue and Pilon, 2004): \deqn{p_s = m_s/M} The Mann-Kendall test statistics (S) is calculated for each resampled dataset.  The resultant vector of resamples S statistics is then sorted in ascending ordering, where \eqn{p_s} is the rank corresponding the largest bootstrapped value of S being less than the test statistic value calculated from the actual data.  M is the total number of bootstrapped resamples.  The default value of M is 1000, however, Yue and Pilon (2004) suggest values between 1000 and 2000.
 }
 \examples{
 x<-c(Nile[1:10])
@@ -48,13 +40,13 @@ pbmk(x)
 \references{
 Hamed, K. H. (2009). Enhancing the effectiveness of prewhitening in trend analysis of hydrologic data. Journal of Hydrology, 368: 143-155.
 
-Kendall, M. (1975). Multivariate analysis. Charles Griffin. Londres. 0-85264-234-2.
+Kendall, M. (1975). Rank Correlation Methods. Griffin, London, 202 pp.
 
 Kundzewicz, Z. W. and Robson, A. J. (2004). Change detection in hydrological records - a review of the methodology. Hydrological Sciences Journal, 49(1): 7-19.
 
-Lancombe, G., McCartney, M., and Forkuor, G. (2012). Drying climate in Ghana over the period 1960-2005: evidence from the resampling-based Mann-Kendall test at local and regional levels. Hydrological Sciences Journal, 57(8): 1594-1609. doi:10.1080/02626667.2012.728291
+Lancombe, G., McCartney, M., and Forkuor, G. (2012). Drying climate in Ghana over the period 1960-2005: evidence from the resampling-based Mann-Kendall test at local and regional levels. Hydrological Sciences Journal, 57(8): 1594-1609.
 
-Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3), 245?259. <doi:10.1017/CBO9781107415324.004>
+Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3): 245-259.
 
 van Giersbergen, N. P. A. (2005). On the effect of deterministic terms on the bias in stable AR models. Economic Letters, 89: 75-82.
 

@@ -1,38 +1,38 @@
-#' @title Block bootstrapped Mann-Kendall Trend Test
+#' @title Nonparametric Block Bootstrapped Mann-Kendall Trend Test
 #'
-#' @description Block lengths are automatically calculated using the lag of the smallest signigicant auto-correlation coefficient.  And eta value of 1 is used as a default value following the results of Khaliq et al. (2009), 2000 bootstrapped replicates are recommended following the results of Svensson et al. (2005).
+#' @description Significant serial correlation present in time series data can be accounted for using the nonparametric block bootstrap technique, which incorporates the Mann-Kendall trend test (Mann, 1945; Kendall, 1975; Kundzewicz and Robson, 2000).  Predetermined block lengths are used in resampling the original time series, thus retaining the memory structure of the data.  If the value of the test statistic falls in the tails of the empirical bootstrapped distribution, there is likely a trend in the data.  The block bootstrap technique is powerful in the presence of autocorrelation (Khaliq et al. 2009; Önöz and Bayazit, 2012).
 #'
 #' @importFrom stats acf qnorm
 #'
-#' @importFrom boot tsboot boot.ci
+#' @importFrom boot tsboot
 #'
 #' @usage bbsmk(x, ci=0.95, nsim=2000, eta=1, bl.len=NULL)
 #'
 #' @param  x  - Time series data vector
 #'
-#' @param  ci - Confidence Interval
+#' @param  ci - Confidence interval
 #'
-#' @param  nsim - Number of simulations
+#' @param  nsim - Number of bootstrapped simulations
 #'
 #' @param  eta - Added to the block length
 #'
 #' @param bl.len - Block length
 #'
-#' @return  Z  - Mann- Kendall Z-statistic
+#' @return  Z-Value  - Mann-Kendall Z statistic
 #'
-#' slp  - sen's slope
+#' Sen's slope - Sen's trend slope
 #'
-#' S  - Mann-Kendall 's'- statistic
+#' S - Mann-Kendall S statistic
 #'
-#' Tau  - Mann-Kendall's Tau
+#' Tau  - Mann-Kendall's Tau value
 #'
-#' lb- Lower bound of confidence interval value
+#' Kendall's Tau Empirical Bootstrapped CI - Kendall's Tau empirical bootstrapped confidence interval
 #'
-#' ub- Upper bound of confidence interval value
+#' Z-value Empirical Bootstrapped CI - Z-value empirical bootstrapped confidence interval
 #'
 #' @references Box, G. E. P. and Jenkins, G. M. (1970). Time Series Analysis Forecasting and Control. Holden-Day, San Fransisco, California, 712 pp.
 #'
-#' @references Kendall, M. (1975). Multivariate analysis. Charles Griffin. Londres. 0-85264-234-2.
+#' @references Kendall, M. (1975). Rank Correlation Methods. Griffin, London, 202 pp.
 #'
 #' @references Khaliq, M. N., Ouarda, T. B. M. J., Gachon, P., Sushama, L., and St-Hilaire, A. (2009). Identification of hydrological trends in the presence of serial and cross correlations: A review of selected methods and their application to annual flow regimes of Canadian rivers. Journal of Hydrology, 368: 117-130.
 #'
@@ -40,13 +40,13 @@
 #'
 #' @references Kundzewicz, Z. W. and Robson, A. J. (2004). Change detection in hydrological records-A review of the methodology. Hydrological Sciences Journal, 49(1): 7-19.
 #'
-#' @references Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3), 245-259. <doi:10.1017/CBO9781107415324.004>
+#' @references Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3): 245-259.
 #'
 #' @references Önöz , B. and Bayazit M. (2012). Block bootstrap for Mann-Kendall trend test of serially dependent data. Hydrological Processes, 26: 3552-3560.
 #'
 #' @references Svensson, C., Kundzewicz, Z. W., and Maurer, T. (2005). Trend detection in river flow series: 2. Floods and low-flow index series. Hydrological Sciences Journal, 50(5): 811-823.
 #'
-#' @details The block bootstrap is used along with the non-parametric Mann-Kendall trend test.  A test statistic falling in the tails of the simulated empirical distribution, the results is likely significant.
+#' @details Block lengths are automatically selected using the number of contiguous significant serial correlations, to which the eta (\eqn{\eta}) term is added. A value of \eqn{\eta = 1} is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
 #'
 #' @examples x<-c(Nile[1:10])
 #' bbsmk(x)
@@ -54,13 +54,13 @@
 #' @export
 #'
 bbsmk <- function(x,ci=0.95,nsim=2000,eta=1, bl.len=NULL) {
-  # Initialize the test Parameters
+  # Initialize the test parameters
 
-  # Time-Series Vector
+  # Time-series vector
   x = x
-  # Confidance Interval
+  # Confidance interval
   ci = ci
-  #Number of Simulations
+  #Number of simulations
   nsim=nsim
   #Value of eta
   eta=eta
@@ -98,11 +98,11 @@ bbsmk <- function(x,ci=0.95,nsim=2000,eta=1, bl.len=NULL) {
 
     bd <- qnorm((1 + ci)/2)/sqrt(n)
 
-    # Calculating auto-correlation function of the observations (ro)
+    # Calculating autocorrelation function of the observations (ro)
 
     ro <- acf(x, lag.max=round(n/4), plot=FALSE)$acf[-1]
 
-    #Initialize vector of significant lags of auto-correlation
+    #Initialize vector of significant lags of autocorrelation
 
     sig.v <- rep(0, round(n/4))
 
@@ -127,7 +127,7 @@ bbsmk <- function(x,ci=0.95,nsim=2000,eta=1, bl.len=NULL) {
 
   }
 
-  #Block bootstrap using Mann Kendall
+  #Block bootstrap using Mann-Kendall
 
   MK.orig <- mkttest(x)
   Z<-round(MK.orig["Z-Value"], digits = 7)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bcpw.R
 \name{bcpw}
 \alias{bcpw}
-\title{Hamed (2009) Bias Corrected Prewhitening.}
+\title{Hamed (2009) Bias Corrected Prewhitening}
 \usage{
 bcpw(x)
 }
@@ -14,21 +14,21 @@ Z-Value - Mann-Kendall Z-statistic after bias corrected prewhitening
 
 Prewhitened Sen's Slope - Sen's slope of the prewhitened data
 
-Sen's Slope - Sen's slope for the original data series 'x'
+Sen's Slope - Sen's slope for the original data series (x)
 
 P-value - p-value after prewhitening
 
-S - Mann-Kendall 'S' statistic
+S - Mann-Kendall S statistic
 
-Var(s) - Variance of 'S'
+Var(s) - Variance of S
 
 Tau - Mann-Kendall's Tau
 }
 \description{
-Hamed (2009) proposed a prewhitening technique in which the slope and lag-1 serial correltaion coefficient are simultaneously estimated.  The lag-1 serial correltaion coefficient is then corrected for bias before prewhitening.
+Hamed (2009) proposes simultaneously estimating the lag-1 serial correlation coefficient and slope.  The lag-1 serial correlation coefficient is then corrected for bias before prewhitening is carried out.
 }
 \details{
-Employs ordinary least squares (OLS) to simultaneously estimate the lag-1 serial correlation coefficient and slope of trend.  The lag-1 serial correlation coefficient is then bias corrected.
+The lag-1 serial correlation coefficient and slope are simultaneously estimated using ordinary least squares.   The lag-1 serial correlation coefficient is then bias corrected using the van Giersbergen (2005) first-order correction.
 }
 \examples{
 x<-c(Nile)
@@ -38,9 +38,9 @@ bcpw(x)
 \references{
 Hamed, K. H. (2009). Enhancing the effectiveness of prewhitening in trend analysis of hydrologic data. Journal of Hydrology, 368: 143-155.
 
-Kendall, M. (1975). Multivariate analysis. Charles Griffin. Londres. 0-85264-234-2.
+Kendall, M. (1975). Rank Correlation Methods. Griffin, London, 202 pp.
 
-Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3), 245-259. <doi:10.1017/CBO9781107415324.004>
+Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3): 245-259.
 
 van Giersbergen, N. P. A. (2005). On the effect of deterministic terms on the bias in stable AR models. Economic Letters, 89: 75-82.
 }
