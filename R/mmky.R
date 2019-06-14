@@ -126,8 +126,6 @@ mmky <-function(x) {
     ess=ess+(1-(k/n))*rof[k]
     }
 
-
-
   # Calculating variance correction factor (n/n*) as per Yue and Wang (2004)
 
   essf = 1 + 2*(ess)

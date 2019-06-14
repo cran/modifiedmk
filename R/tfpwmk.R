@@ -1,4 +1,4 @@
-#' @title Mann-Kendall Trend Test applied to Trend-Free Prewhitened Time Series Data in Presence of Serial Correlation Using Yue et al. (2002) Approach
+#' @title Mann-Kendall Trend Test Applied to Trend-Free Prewhitened Time Series Data in Presence of Serial Correlation Using Yue et al. (2002) Approach
 #'
 #' @description When the time series data are not random and influenced by autocorrelation, the trend component is removed from the data and is prewhitened prior to the application of the trend test.
 #'
@@ -37,7 +37,7 @@
 #'
 #' @references Yue, S., Pilon, P., Phinney, B., and Cavadias, G. (2002). The influence of autocorrelation on the ability to detect trend in hydrological series. Hydrological Processes, 16(9): 1807–1829. <doi:10.1002/hyp.1095>
 #'
-#' @details The linear trend component is removed from the original data and then preWhitened using the lag-1 serial correlation coefficient. The prewhitening data are then tested with Mann-Kendall trend test.
+#' @details The linear trend component is removed from the original data and then prewhitened using the lag-1 serial correlation coefficient. The prewhitening data are then tested with Mann-Kendall trend test.
 #'
 #' @examples x<-c(Nile)
 #' tfpwmk(x)

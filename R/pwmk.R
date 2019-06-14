@@ -1,6 +1,6 @@
 #' @title Mann-Kendall Test of Prewhitened Time Series Data in Presence of Serial Correlation Using the von Storch (1995) Approach
 #'
-#' @description When time series data are not random and influenced by autocorrelation, preWhitening the time series prior to application of trend test is suggested.
+#' @description When time series data are not random and influenced by autocorrelation, prewhitening the time series prior to application of trend test is suggested.
 #'
 #' @importFrom stats acf median pnorm qnorm
 #'

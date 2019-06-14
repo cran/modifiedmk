@@ -40,7 +40,7 @@
 #'
 #' @references Svensson, C., Kundzewicz, Z. W., and Maurer, T. (2005). Trend detection in river flow series: 2. Floods and low-flow index series. Hydrological Sciences Journal, 50(5): 811-823.
 #'
-#' @details Block lengths are number of contiguous significant serial correlations, to which the (\eqn{\eta}) term is added. A value of \eqn{\eta = 1} is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
+#' @details Block lengths are the number of contiguous significant serial correlations, to which the (\eqn{\eta}) term is added. A value of \eqn{\eta = 1} is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
 #'
 #' @examples x<-c(Nile[1:10])
 #' bbssr(x)
@@ -85,6 +85,8 @@ bbssr <- function(x,ci=0.95,nsim=2000,eta=1, bl.len=NULL) {
     x[-c(which(is.finite(x) == FALSE))] -> x
     warning("The input vector contains non-finite numbers. An attempt was made to remove them")
   }
+  
+  n<-length(x)
 
   if (is.null(bl.len) == TRUE) {
     #bounds of the confidence intervals of the acf function

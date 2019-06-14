@@ -28,7 +28,7 @@ Test Statistic Empirical Bootstrapped CI - Test statistic empirical bootstrapped
 Significant serial correlation present in time series data can be accounted for using the nonparametric block bootstrap technique, which incorporates Spearman’s Rank Correlation trend test (Lehmann, 1975; Sneyers, 1990;Kundzewicz and Robson, 2000).  Predetermined block lengths are used in resampling the original time series, thus retaining the memory structure of the data.  If the value of the test statistic falls in the tails of the empirical bootstrapped distribution, there is likely a trend in the data.  The block bootstrap technique is powerful in the presence of autocorrelation (Khaliq et al. 2009; Önöz and Bayazit, 2012).
 }
 \details{
-Block lengths are number of contiguous significant serial correlations, to which the (\eqn{\eta}) term is added. A value of \eqn{\eta = 1} is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
+Block lengths are the number of contiguous significant serial correlations, to which the (\eqn{\eta}) term is added. A value of \eqn{\eta = 1} is used as the default as per Khaliq et al. (2009).  Alternatively, the user may define the block length.  2000 bootstrap replicates are recommended as per Svensson et al. (2005) and Önöz, B. and Bayazit (2012).
 }
 \examples{
 x<-c(Nile[1:10])

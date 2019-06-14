@@ -1,6 +1,6 @@
 #' @title Spearman's Rank Correlation Test
 #'
-#' @description Spearman's Rank Correlation test by Lehmann (1975) and (Sneyers (1990) is an useful in detecting trends.
+#' @description Spearman's Rank Correlation test by Lehmann (1975) and Sneyers (1990) is useful in detecting trends.
 #'
 #' @param  x  - Time series data vector
 #'
@@ -83,7 +83,7 @@ spear<-function(x) {
   rhos<- sum(sxy)/sqrt(sum(sx)*sum(sy))
 
  # Calculating Rho(s)*sqrt(n-1)
-  tsrc<-rhos*sqrt(length(x))
+  tsrc<-rhos*sqrt(length(x)-1)
 
   return(c("Correlation coefficient" = rhos,
            "Z-tranformed Test Statistic value" = tsrc))

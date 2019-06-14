@@ -31,7 +31,7 @@ old.variance - Old variance before variance Correction
 new.variance - Variance after correction
 }
 \description{
-Time series data is often influenced by previous observations. When data is not random and influenced by autocorrelation, modified Mann-Kendall tests may be used for trend detction studies. Hamed and Rao (1998) have proposed a variance correction approach to address the issue of serial correlation in trend analysis. Data are initially detrended and the effective sample size is calulated using the ranks of significant serial correlation coefficients which are then used to corrected the inflated (or deflated) variance of the test statistic.
+Time series data is often influenced by previous observations. When data is not random and influenced by autocorrelation, modified Mann-Kendall tests may be used for trend detction studies. Hamed and Rao (1998) have proposed a variance correction approach to address the issue of serial correlation in trend analysis. Data are initially detrended and the effective sample size is calulated using the ranks of significant serial correlation coefficients which are then used to correct the inflated (or deflated) variance of the test statistic.
 }
 \details{
 A detrended time series is constructed using Sen's slope and the lag-1 autocorreltation coefficient of the ranks of the data. The variance correction approach proposed by Hamed and Rao (1998) uses only significant lags of autocorrelation coefficients.

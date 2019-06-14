@@ -92,6 +92,8 @@ bbsmk <- function(x,ci=0.95,nsim=2000,eta=1, bl.len=NULL) {
     x[-c(which(is.finite(x) == FALSE))] -> x
     warning("The input vector contains non-finite numbers. An attempt was made to remove them")
   }
+  
+  n<-length(x)
 
   if (is.null(bl.len) == TRUE) {
     #bounds of the confidence intervals of the acf function

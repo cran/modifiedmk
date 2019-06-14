@@ -25,7 +25,7 @@ Var(s) - Variance of S
 Tau  - Mann-Kendall's Tau
 }
 \description{
-When time series data are not random and influenced by autocorrelation, preWhitening the time series prior to application of trend test is suggested.
+When time series data are not random and influenced by autocorrelation, prewhitening the time series prior to application of trend test is suggested.
 }
 \details{
 The lag-1 serial correlation coefficient is used for prewhitening.

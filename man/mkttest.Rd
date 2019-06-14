@@ -26,7 +26,7 @@ Tau  - Mann-Kendall's Tau
 The Mann-Kendall trend test is a nonparametric trend test used to identify monotonic trends present in time series data.
 }
 \details{
-The Mann-Kendall trend test is a nonparametric trend tests which assuems no distribution of the data. The null hypothesis of the test is that there is no trend in the data and the alternative hypothesis is that the data represents a monotonic trend.
+The Mann-Kendall trend test is a nonparametric trend tests which assumes no distribution of the data. The null hypothesis of the test is that there is no trend in the data and the alternative hypothesis is that the data represents a monotonic trend.
 }
 \examples{
 x<-c(Nile)

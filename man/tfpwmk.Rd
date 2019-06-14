@@ -2,7 +2,7 @@
 % Please edit documentation in R/tfpwmk.R
 \name{tfpwmk}
 \alias{tfpwmk}
-\title{Mann-Kendall Trend Test applied to Trend-Free Prewhitened Time Series Data in Presence of Serial Correlation Using Yue et al. (2002) Approach}
+\title{Mann-Kendall Trend Test Applied to Trend-Free Prewhitened Time Series Data in Presence of Serial Correlation Using Yue et al. (2002) Approach}
 \usage{
 tfpwmk(x)
 }
@@ -28,7 +28,7 @@ Tau  - Mann-Kendall's Tau
 When the time series data are not random and influenced by autocorrelation, the trend component is removed from the data and is prewhitened prior to the application of the trend test.
 }
 \details{
-The linear trend component is removed from the original data and then preWhitened using the lag-1 serial correlation coefficient. The prewhitening data are then tested with Mann-Kendall trend test.
+The linear trend component is removed from the original data and then prewhitened using the lag-1 serial correlation coefficient. The prewhitening data are then tested with Mann-Kendall trend test.
 }
 \examples{
 x<-c(Nile)

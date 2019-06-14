@@ -1,6 +1,6 @@
 #' @title Modified Mann-Kendall Test For Serially Correlated Data Using the Hamed and Rao (1998) Variance Correction Approach Considering Only the First Three Lags
 #'
-#' @description Time series data is often influenced by serial correlation. When data are not random and influenced by autocorrelation, modified Mann-Kendall tests may be used for trend detction. Hamed and Rao (1998) have proposed variance correction approach to address the issue of serial correlation in Trend analysis. Data are initially detrended and the effective sample size is calulated using the ranks of significant serial correlation coefficients which are then used to corrected the inflated (or deflated) variance of the test statistic.
+#' @description Time series data is often influenced by serial correlation. When data are not random and influenced by autocorrelation, modified Mann-Kendall tests may be used for trend detction. Hamed and Rao (1998) have proposed variance correction approach to address the issue of serial correlation in Trend analysis. Data are initially detrended and the effective sample size is calulated using the ranks of significant serial correlation coefficients which are then used to correct the inflated (or deflated) variance of the test statistic.
 #'
 #' @importFrom stats acf median pnorm qnorm
 #'
@@ -8,7 +8,7 @@
 #'
 #' @param  x  - Time series data vector
 #'
-#' @param  ci - Confidence Interval
+#' @param  ci - Confidence interval
 #'
 #' @return  Corrected Zc  - Z statistic after variance Correction
 #'

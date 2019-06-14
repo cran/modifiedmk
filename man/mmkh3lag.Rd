@@ -9,7 +9,7 @@ mmkh3lag(x,ci=0.95)
 \arguments{
 \item{x}{- Time series data vector}
 
-\item{ci}{- Confidence Interval}
+\item{ci}{- Confidence interval}
 }
 \value{
 Corrected Zc  - Z statistic after variance Correction
@@ -31,7 +31,7 @@ old.variance - Old variance before variance Correction
 new.variance - Variance after correction
 }
 \description{
-Time series data is often influenced by serial correlation. When data are not random and influenced by autocorrelation, modified Mann-Kendall tests may be used for trend detction. Hamed and Rao (1998) have proposed variance correction approach to address the issue of serial correlation in Trend analysis. Data are initially detrended and the effective sample size is calulated using the ranks of significant serial correlation coefficients which are then used to corrected the inflated (or deflated) variance of the test statistic.
+Time series data is often influenced by serial correlation. When data are not random and influenced by autocorrelation, modified Mann-Kendall tests may be used for trend detction. Hamed and Rao (1998) have proposed variance correction approach to address the issue of serial correlation in Trend analysis. Data are initially detrended and the effective sample size is calulated using the ranks of significant serial correlation coefficients which are then used to correct the inflated (or deflated) variance of the test statistic.
 }
 \details{
 A detrended time series is constructed using Sen's slope and the lag-1 autocorreltation coefficient of the ranks of the data. The variance correction approach proposed by Hamed and Rao (1998) uses only significant lags of autocorrelation coefficients. As suggested by Rao et al. (2003), only the first three autocorrelation coefficients are used in this function.

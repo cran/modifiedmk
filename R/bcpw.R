@@ -1,6 +1,6 @@
-#' @title Hamed (2009) Bias Corrected Prewhitening
+#' @title Hamed (2009) Bias Corrected Prewhitening.
 #'
-#' @description Hamed (2009) proposes simultaneously estimating the lag-1 serial correlation coefficient and slope.  The lag-1 serial correlation coefficient is then corrected for bias before prewhitening is carried out.
+#' @description Hamed (2009) proposed a prewhitening technique in which the slope and lag-1 serial correltaion coefficient are simultaneously estimated.  The lag-1 serial correlation coefficient is then corrected for bias before prewhitening.
 #'
 #' @importFrom utils head tail
 #'
@@ -14,25 +14,25 @@
 #'
 #' @return  Prewhitened Sen's Slope - Sen's slope of the prewhitened data
 #'
-#' @return  Sen's Slope - Sen's slope for the original data series (x)
+#' @return  Sen's Slope - Sen's slope for the original data series 'x'
 #'
 #' @return  P-value - p-value after prewhitening
 #'
-#' @return  S - Mann-Kendall S statistic
+#' @return  S - Mann-Kendall 'S' statistic
 #'
-#' @return  Var(s) - Variance of S
+#' @return  Var(s) - Variance of 'S'
 #'
 #' @return  Tau - Mann-Kendall's Tau
 #'
 #' @references Hamed, K. H. (2009). Enhancing the effectiveness of prewhitening in trend analysis of hydrologic data. Journal of Hydrology, 368: 143-155.
 #'
-#' @references Kendall, M. (1975). Rank Correlation Methods. Griffin, London, 202 pp.
+#' @references Kendall, M. (1975). Multivariate analysis. Charles Griffin. Londres. 0-85264-234-2.
 #'
-#' @references Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3): 245-259.
+#' @references Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3), 245-259. <doi:10.1017/CBO9781107415324.004>
 #'
 #' @references van Giersbergen, N. P. A. (2005). On the effect of deterministic terms on the bias in stable AR models. Economic Letters, 89: 75-82.
 #'
-#' @details The lag-1 serial correlation coefficient and slope are simultaneously estimated using ordinary least squares.   The lag-1 serial correlation coefficient is then bias corrected using the van Giersbergen (2005) first-order correction.
+#' @details Employs ordinary least squares (OLS) to simultaneously estimate the lag-1 serial correlation coefficient and slope of trend.  The lag-1 serial correlation coefficient is then bias corrected.
 #'
 #' @examples x<-c(Nile)
 #' bcpw(x)
@@ -40,15 +40,15 @@
 #' @export
 #'
 bcpw <- function(x) {
-  # Initialize the test parameters
+  # Initialize the test Parameters
 
-  # Time series vector
+  # Time-Series Vector
   x = x
-  # Modified Z statistic after prewhitening
+  # Modified Z-Statistic after Pre-Whitening
   z = NULL
-  # Modified p-value after prewhitening
+  # Modified P-value after Pre-Whitening
   pval = NULL
-  # Initialize Mann-Kendall S statistic
+  # Initialize Mann-Kendall 'S'- Statistic
   S = 0
   # Initialize Mann-Kendall var.S
   var.S = NULL
@@ -62,11 +62,6 @@ bcpw <- function(x) {
   }
 
   nx<-length(x)
-  
-  #Specify minimum input vector length
-  if (nx < 3) {
-    stop("Input vector must contain at least three values")
-  }
 
   # To test whether the data values are finite numbers and attempting to eliminate non-finite numbers
   if (any(is.finite(x) == FALSE)) {
@@ -74,7 +69,9 @@ bcpw <- function(x) {
     warning("The input vector contains non-finite numbers. An attempt was made to remove them")
   }
 
-  #Calculate the lag-1 autocorrelation coefficient and the intercept
+  nx<-length(x)
+
+  #Calculate the lag 1 autocorrelation coefficient and the intercept
   zx<-cbind(head(x,n=nx-1),matrix(data=1, nrow=(nx-1),ncol=1),tail(seq(1:nx),n=(nx-1)))
   y<-tail(x,n=nx-1)
   zTrans<-t(zx)
@@ -87,7 +84,7 @@ bcpw <- function(x) {
   #Correct for bias in the lag-1 acf using eq. 24 of Hamed (2009)
   ACFlag1BC<-((nx*ACFlag1)+2)/(nx-4)
 
-  # Calculating prewhitened series
+  # Calculating pre-whitened Series
 
   a=1:(nx-1)
   b=2:nx
@@ -95,7 +92,7 @@ bcpw <- function(x) {
 
   PWn<-length(xn)
 
-  # Calculating Mann-Kendall S statistic
+  # Calculating Mann-Kendall 'S'- Statistic
 
   for (i in 1:(PWn-1)) {
     for (j in (i+1):PWn) {
@@ -103,7 +100,7 @@ bcpw <- function(x) {
     }
   }
 
-  # Calculating Mann-Kendall variance (Var(s))
+  # Calculating Mann-Kendall Variance (Var(s))
 
   var.S = PWn*(PWn-1)*(2*PWn+5)*(1/18)
   if(length(unique(xn)) < PWn) {
@@ -116,7 +113,7 @@ bcpw <- function(x) {
     }
   }
 
-  # Calculating Z statistic values
+  # Calculating Z-Statistic values
 
   if (S == 0) {
     z = 0
@@ -127,17 +124,17 @@ bcpw <- function(x) {
     z = (S+1)/sqrt(var.S)
   }
 
-  # Calculating p-value before and after prewhitening
+  # Calculating P-Value before and after prewhitening
 
   pval = 2*pnorm(-abs(z))
 
 
-  # Calculating Kendall's Tau
+  # Calculating kendall's Tau
 
   Tau = S/(.5*PWn*(PWn-1))
 
 
-  # Calculating Sen's slope for original series
+  # Calculating Sen's slope for original series 'x'
 
   rep(NA, nx * (nx - 1)/2) -> V
   k = 0
@@ -169,4 +166,3 @@ bcpw <- function(x) {
             "Var(S)" = var.S,
             "Tau " = Tau))
 }
-

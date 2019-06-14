@@ -32,11 +32,11 @@ new.variance - Variance after correction
 Time series data is often influenced by serial correlation. When data are not random and influenced by autocorrelation, modified Mann-Kendall tests may be used for trend detction. Yue and Wang (2004) have proposed a variance correction approach to address the issue of serial correlation in trend analysis. Data are initially detrended and the effective sample size is calculated using the lag-1 autocorrelation coefficient.
 }
 \details{
-The variance correction approach suggested by Yue and Wang (2004) is implemeted in this function. Only the lag-1 serial correlation coefficient is used in the calculation of the effective sample size.
+The variance correction approach suggested by Yue and Wang (2004) is implemeted in this function. Effective sample size is calculated based on the AR(1) assumption.
 }
 \examples{
 x<-c(Nile)
-mmky(x)
+mmky1lag(x)
 
 }
 \references{

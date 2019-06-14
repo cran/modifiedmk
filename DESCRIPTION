@@ -1,6 +1,6 @@
 Package: modifiedmk
 Title: Modified Versions of Mann Kendall and Spearman's Rho Trend Tests
-Version: 1.3.1
+Version: 1.4.0
 Authors@R: c(person("Sandeep Kumar", "Patakamuri", email = "sandeep.patakamuri@gmail.com", role = c("aut", "cre")),person("Nicole", "O'Brien", email = "nobrien@uwaterloo.ca", role = c("aut", "ctb")))
 Description: Power of non-parametric Mann-Kendall test and Spearman’s Rho test is highly influenced by serially correlated data. To address this issue, trend tests may be applied on the modified versions of the time series data by  Block Bootstrapping (BBS), Prewhitening (PW) , Trend Free Prewhitening (TFPW), Bias Corrected Prewhitening and Variance Correction Approach by calculating effective sample size.
     Mann, H. B. (1945).<doi:10.1017/CBO9781107415324.004>.
@@ -21,9 +21,9 @@ VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Suggests: testthat, knitr, rmarkdown,covr
 NeedsCompilation: no
-Packaged: 2019-03-31 07:18:22 UTC; Deepu
+Packaged: 2019-06-14 17:09:36 UTC; Deepu
 Author: Sandeep Kumar Patakamuri [aut, cre],
   Nicole O'Brien [aut, ctb]
 Maintainer: Sandeep Kumar Patakamuri <sandeep.patakamuri@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-03-31 07:30:02 UTC
+Date/Publication: 2019-06-14 17:30:09 UTC

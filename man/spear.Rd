@@ -15,7 +15,7 @@ Correlation coefficient - Spearman's Correlation coefficient value
 Z-Tranformed Test Statistic value - Z-transform value to test significance \eqn{\rho(\sqrt{n-1})}
 }
 \description{
-Spearman's Rank Correlation test by Lehmann (1975) and (Sneyers (1990) is an useful in detecting trends.
+Spearman's Rank Correlation test by Lehmann (1975) and Sneyers (1990) is useful in detecting trends.
 }
 \details{
 Spearman's Rank Correlation test by Lehmann (1975) and Sneyers (1990) is implemeted in this function.

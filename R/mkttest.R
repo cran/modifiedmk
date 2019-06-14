@@ -26,7 +26,7 @@
 #'
 #' @references Sen, P. K. (1968). Estimates of the Regression Coefficient Based on Kendall’s Tau. Journal of the American statistical Association, 63(324): 1379. <doi:10.2307/2285891>
 #'
-#' @details The Mann-Kendall trend test is a nonparametric trend tests which assuems no distribution of the data. The null hypothesis of the test is that there is no trend in the data and the alternative hypothesis is that the data represents a monotonic trend.
+#' @details The Mann-Kendall trend test is a nonparametric trend tests which assumes no distribution of the data. The null hypothesis of the test is that there is no trend in the data and the alternative hypothesis is that the data represents a monotonic trend.
 #'
 #' @examples x<-c(Nile)
 #' mkttest(x)

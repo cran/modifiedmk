@@ -4,25 +4,31 @@
 #'
 #' @importFrom boot tsboot
 #'
-#' @usage pbmk(x, ci=0.95, nsim=1000, pw="Hamed")
+#' @usage pbmk(x, nsim=1000, pw="Hamed")
 #'
 #' @param  x  - Time series data vector
-#'
-#' @param  ci - Confidence interval
 #'
 #' @param  nsim - Number of bootstrapped simulations
 #'
 #' @param pw -  Optional bias corrected prewhitening suggested by Hamed (2009)
 #'
 #' @return  Z Value - Mann-Kendall Z statistic from original data
-#' Sen's Slope - Sen's slope from the original data
-#' S - Mann-Kendall S statistic
-#' Kendall's Tau - Mann-Kendall's Tau
-#' BCP Z Value - Bias corrected prewhitened Z value
-#' BCP Sen's Slope - Bias corrected prewhitened Sen's slope
-#' BCP S - Bias corrected prewhitened S
-#' BCP Kendall's Tau - Bias corrected prewhitened Kendall's Tau
-#' Bootstrapped P-Value - Mann-Kendall bootstrapped p-value
+#' 
+#' @return  Sen's Slope - Sen's slope from the original data
+#' 
+#' @return  S - Mann-Kendall S statistic
+#' 
+#' @return  Kendall's Tau - Mann-Kendall's Tau
+#' 
+#' @return  BCP Z Value - Bias corrected prewhitened Z value
+#' 
+#' @return  BCP Sen's Slope - Bias corrected prewhitened Sen's slope
+#' 
+#' @return  BCP S - Bias corrected prewhitened S
+#' 
+#' @return  BCP Kendall's Tau - Bias corrected prewhitened Kendall's Tau
+#' 
+#' @return  Bootstrapped P-Value - Mann-Kendall bootstrapped p-value
 #'
 #' @references Hamed, K. H. (2009). Enhancing the effectiveness of prewhitening in trend analysis of hydrologic data. Journal of Hydrology, 368: 143-155.
 #'
@@ -33,12 +39,12 @@
 #' @references Lancombe, G., McCartney, M., and Forkuor, G. (2012). Drying climate in Ghana over the period 1960-2005: evidence from the resampling-based Mann-Kendall test at local and regional levels. Hydrological Sciences Journal, 57(8): 1594-1609.
 #'
 #' @references Mann, H. B. (1945). Nonparametric Tests Against Trend. Econometrica, 13(3): 245-259.
-#
+#'
 #' @references van Giersbergen, N. P. A. (2005). On the effect of deterministic terms on the bias in stable AR models. Economic Letters, 89: 75-82.
 #'
 #' @references Yue, S. and Pilon, P. (2004). A comparison of the power of the t test, Mann-Kendall and bootstrap tests for trend detection, Hydrological Sciences Journal, 49(1): 21-37.
 #'
-#' @details Bootstrapped samples are calculated by resampling one value at a time from the time series with replacement.  The p-value (\eqn{p_s}) of the resampled data is estimated by (Yue and Pilon, 2004): \deqn{p_s = m_s/M} The Mann-Kendall test statistics (S) is calculated for each resampled dataset.  The resultant vector of resamples S statistics is then sorted in ascending ordering, where \eqn{p_s} is the rank corresponding the largest bootstrapped value of S being less than the test statistic value calculated from the actual data.  M is the total number of bootstrapped resamples.  The default value of M is 1000, however, Yue and Pilon (2004) suggest values between 1000 and 2000.
+#' @details Bootstrapped samples are calculated by resampling one value at a time from the time series with replacement.  The p-value (\eqn{p_s}) of the resampled data is estimated by (Yue and Pilon, 2004): \deqn{p_s = m_s/M} The Mann-Kendall test statistics (S) is calculated for each resampled dataset.  The resultant vector of resampled S statistics is then sorted in ascending ordering, where \eqn{p_s} is the rank corresponding the largest bootstrapped value of S being less than the test statistic value calculated from the actual data.  M is the total number of bootstrapped resamples.  The default value of M is 1000, however, Yue and Pilon (2004) suggest values between 1000 and 2000. If the user does not choose to apply prewhitening, this argument 'pw' can be set to NULL.
 #' 
 #'
 #' @examples x<-c(Nile[1:10])
@@ -46,13 +52,11 @@
 #'
 #' @export
 #'
-pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
+pbmk <- function(x, nsim=1000, pw="Hamed") {
   # Initialize the test parameters
 
   # Time series vector
   x = x
-  # Confidance interval
-  ci = ci
   #Number of simulations
   nsim=nsim
   # Mann-Kendall Tau
@@ -86,6 +90,8 @@ pbmk <- function(x, ci=0.95, nsim=1000, pw="Hamed") {
     x[-c(which(is.finite(x) == FALSE))] -> x
     warning("The input vector contains non-finite numbers. An attempt was made to remove them")
   }
+  
+  nx<-length(x)
 
   if (is.null(pw) == FALSE) {
     #Calculate the lag-1 autocorrelation coefficient and the intercept

@@ -4,12 +4,10 @@
 \alias{pbmk}
 \title{Bootstrapped Mann-Kendall Trend Test with Optional Bias Corrected Prewhitening}
 \usage{
-pbmk(x, ci=0.95, nsim=1000, pw="Hamed")
+pbmk(x, nsim=1000, pw="Hamed")
 }
 \arguments{
 \item{x}{- Time series data vector}
-
-\item{ci}{- Confidence interval}
 
 \item{nsim}{- Number of bootstrapped simulations}
 
@@ -17,20 +15,28 @@ pbmk(x, ci=0.95, nsim=1000, pw="Hamed")
 }
 \value{
 Z Value - Mann-Kendall Z statistic from original data
+
 Sen's Slope - Sen's slope from the original data
+
 S - Mann-Kendall S statistic
+
 Kendall's Tau - Mann-Kendall's Tau
+
 BCP Z Value - Bias corrected prewhitened Z value
+
 BCP Sen's Slope - Bias corrected prewhitened Sen's slope
+
 BCP S - Bias corrected prewhitened S
+
 BCP Kendall's Tau - Bias corrected prewhitened Kendall's Tau
+
 Bootstrapped P-Value - Mann-Kendall bootstrapped p-value
 }
 \description{
 The empirical distribution of the Mann-Kendall test statistic is calculated by bootstrapped resampling.  The Hamed (2009) bias correction prewhitening technique can optionally be applied as the default for prewhitening before the bootstrapped Mann-Kendall test is applied (Lacombe et al., 2012).
 }
 \details{
-Bootstrapped samples are calculated by resampling one value at a time from the time series with replacement.  The p-value (\eqn{p_s}) of the resampled data is estimated by (Yue and Pilon, 2004): \deqn{p_s = m_s/M} The Mann-Kendall test statistics (S) is calculated for each resampled dataset.  The resultant vector of resamples S statistics is then sorted in ascending ordering, where \eqn{p_s} is the rank corresponding the largest bootstrapped value of S being less than the test statistic value calculated from the actual data.  M is the total number of bootstrapped resamples.  The default value of M is 1000, however, Yue and Pilon (2004) suggest values between 1000 and 2000.
+Bootstrapped samples are calculated by resampling one value at a time from the time series with replacement.  The p-value (\eqn{p_s}) of the resampled data is estimated by (Yue and Pilon, 2004): \deqn{p_s = m_s/M} The Mann-Kendall test statistics (S) is calculated for each resampled dataset.  The resultant vector of resampled S statistics is then sorted in ascending ordering, where \eqn{p_s} is the rank corresponding the largest bootstrapped value of S being less than the test statistic value calculated from the actual data.  M is the total number of bootstrapped resamples.  The default value of M is 1000, however, Yue and Pilon (2004) suggest values between 1000 and 2000. If the user does not choose to apply prewhitening, this argument 'pw' can be set to NULL.
 }
 \examples{
 x<-c(Nile[1:10])

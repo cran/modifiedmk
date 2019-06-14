@@ -32,10 +32,10 @@
 #'
 #' @references Yue, S. and Wang, C. Y. (2004). The Mann-Kendall test modified by effective sample size to detect trend in serially correlated hydrological series. Water Resources Management, 18(3): 201–218. <doi:10.1023/B:WARM.0000043140.61082.60>
 #'
-#' @details The variance correction approach suggested by Yue and Wang (2004) is implemeted in this function. Only the lag-1 serial correlation coefficient is used in the calculation of the effective sample size.
+#' @details The variance correction approach suggested by Yue and Wang (2004) is implemeted in this function. Effective sample size is calculated based on the AR(1) assumption.
 #'
 #' @examples x<-c(Nile)
-#' mmky(x)
+#' mmky1lag(x)
 #'
 #' @export
 #'
@@ -77,9 +77,9 @@ mmky1lag <-function(x) {
   if (n < 3) {
     stop("Input vector must contain at least three values")
   }
-  
+
   # Calculating Sen's slope
-  
+
   rep(NA, n * (n - 1)/2) -> V
   k = 0
   for (i in 1:(n-1)) {
@@ -102,9 +102,9 @@ mmky1lag <-function(x) {
       S = S + sign(x[j]-x[i])
     }
   }
- 
+
   # Calculating autocorrelation function of the observations (ro)
-  
+
   #lag.max can be edited to include larger number of lags
 
   acf(xn, lag.max=1, plot=FALSE)$acf[-1] -> ro
@@ -117,11 +117,12 @@ mmky1lag <-function(x) {
     rof[i] <- ro[i]
   }
 
+  # Calculating sum(1-(k/n))*rof^k) for k=1,2...,(n-1)
 
-  # Calculating sum(1-(k/n))*rof[i]) for k=1,2...,(n-1)
-
-  ess=(1-(1/n))*(rof)
-
+  ess=0
+  for(k in 1:(n-1)){
+  ess<-ess+((1-(1/n))*(rof^(k)))
+  }
 
   # Calculating variance correction factor (n/n*) as per Yue and Wang (2004)
 
@@ -143,7 +144,7 @@ mmky1lag <-function(x) {
   # Calculating new variance Var(s)*=(Var(s))*(n/n*) as per Yue and Wang (2004)
 
   VS = var.S * essf
- 
+
   # Calculating Z statistic values before and after variance correction
 
   if (S == 0) {
