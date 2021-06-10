@@ -49,6 +49,7 @@
 #'
 bbssr<-function (x, ci = 0.95, nsim = 2000, eta = 1, bl.len = NULL)
 {
+  options(scipen = 999)
   x = x
   ci = ci
   nsim = nsim

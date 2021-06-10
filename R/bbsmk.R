@@ -55,6 +55,7 @@
 #'
 bbsmk<-function (x, ci = 0.95, nsim = 2000, eta = 1, bl.len = NULL)
 {
+  options(scipen = 999)
   x = x
   ci = ci
   nsim = nsim
@@ -109,6 +110,7 @@ bbsmk<-function (x, ci = 0.95, nsim = 2000, eta = 1, bl.len = NULL)
   Z <- round(MK.orig[[1]], digits = 7)
   slp <- round(MK.orig[[2]], digits = 7)
   S <- MK.orig[[3]]
+  p <- MK.orig[[5]]
   Tau <- round(MK.orig[[6]], digits = 7)
   MKtau <- function(x) mkttest(x)[[6]]
   boot.out.MKtau <- tsboot(x, MKtau, R = nsim, l = bl.len,
@@ -123,6 +125,7 @@ bbsmk<-function (x, ci = 0.95, nsim = 2000, eta = 1, bl.len = NULL)
   return(c("Z-Value"=Z,
            "Sen's Slope"=slp,
            "S"=S,
+           "P-value"=p,
            "Kendall's Tau"=Tau,
            "Kendall's Tau Empirical Bootstrapped CI Lower Bound"=lb.MKtau,
            "Kendall's Tau Empirical Bootstrapped CI Upper Bound"=ub.MKtau,

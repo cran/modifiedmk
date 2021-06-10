@@ -1,7 +1,13 @@
 Package: modifiedmk
 Title: Modified Versions of Mann Kendall and Spearman's Rho Trend Tests
-Version: 1.5.0
-Authors@R: c(person("Sandeep Kumar", "Patakamuri", email = "sandeep.patakamuri@gmail.com", role = c("aut", "cre")),person("Nicole", "O'Brien", email = "nobrien@uwaterloo.ca", role = c("aut", "ctb")))
+Version: 1.6
+Authors@R: c(person("Sandeep Kumar", "Patakamuri", 
+            email = "sandeep.patakamuri@gmail.com", 
+            role = c("aut", "cre"),
+            comment = c(ORCID = "0000-0001-8965-8287")),
+            person("Nicole", "O'Brien", 
+            email = "nobrien@uwaterloo.ca", 
+            role = c("aut", "ctb")))
 Description: Power of non-parametric Mann-Kendall test and Spearman’s Rho test is highly influenced by serially correlated data. To address this issue, trend tests may be applied on the modified versions of the time series data by  Block Bootstrapping (BBS), Prewhitening (PW) , Trend Free Prewhitening (TFPW), Bias Corrected Prewhitening and Variance Correction Approach by calculating effective sample size.
     Mann, H. B. (1945).<doi:10.1017/CBO9781107415324.004>.
     Kendall, M. (1975). Multivariate analysis. Charles Griffin&Company Ltd,. 
@@ -16,13 +22,15 @@ Depends: R (>= 3.0.0)
 Imports: boot
 License: AGPL-3
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.0
-Suggests: testthat, knitr, rmarkdown,covr
+RoxygenNote: 7.1.1
+Suggests: testthat (>= 3.0.0), knitr, markdown, rmarkdown, covr
 NeedsCompilation: no
-Packaged: 2020-03-17 16:27:50 UTC; Deepu
-Author: Sandeep Kumar Patakamuri [aut, cre],
-  Nicole O'Brien [aut, ctb]
+Packaged: 2021-06-10 07:09:11 UTC; Deepu
 Maintainer: Sandeep Kumar Patakamuri <sandeep.patakamuri@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-03-17 16:40:02 UTC
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Author: Sandeep Kumar Patakamuri [aut, cre]
+    (<https://orcid.org/0000-0001-8965-8287>),
+  Nicole O'Brien [aut, ctb]
+Date/Publication: 2021-06-10 07:20:02 UTC

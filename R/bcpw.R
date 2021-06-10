@@ -41,7 +41,7 @@
 #'
 bcpw<-function(x) {
   # Initialize the test Parameters
-
+  options(scipen = 999)
   # Time-Series Vector
   x = x
   # Modified Z-Statistic after Pre-Whitening
@@ -115,7 +115,7 @@ bcpw<-function(x) {
 
   if (S == 0) {
     z = 0
-  }
+  }else
   if (S > 0) {
     z = (S-1)/sqrt(var.S)
   } else {
